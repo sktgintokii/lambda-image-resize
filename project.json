@@ -1,8 +1,8 @@
 {
   "name": "imageResize",
   "description": "",
-  "memory": 128,
-  "timeout": 5,
+  "memory": 1024,
+  "timeout": 30,
   "role": "arn:aws:iam::274863627878:role/service-role/lambda-poc",
   "handler": "index.handler",
   "environment": {}
