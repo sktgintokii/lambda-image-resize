@@ -6,8 +6,9 @@ AWS Lambda Image Resize
 4. npm
 
 ### Preinstall
-1. Setup aws credentials
-```$ aws configure```
+1. Set aws credentials to env
+```$ export AWS_ACCESS_KEY_ID=<yourAccessKey>```
+```$ export AWS_SECRET_ACCESS_KEY=<yourSecretKey>```
 
 ### Required AWS Role Permission
 

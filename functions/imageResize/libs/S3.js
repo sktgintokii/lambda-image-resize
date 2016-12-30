@@ -10,10 +10,12 @@ class S3 {
     return new Promise((resolve, reject) => {
       client.getObject({ Bucket: bucket, Key: key }, (err, data) => {
         if (err) return reject(err);
-        if ('image-processed' in data.Metadata) return reject('Object was already processed.');
 
+        const imageProcessed = JSON.parse(data.Metadata['image-processed'] || 'null');
+        const sizes = JSON.parse(data.Metadata['sizes'] || 'null');
+        if (imageProcessed) return reject('Object was already processed.');
         resolve({
-          metaData: data.Metadata,
+          metaData: { imageProcessed, sizes },
           body: data.Body,
         });
       });

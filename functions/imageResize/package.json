@@ -1,5 +1,5 @@
 {
-  "name": "poc",
+  "name": "imageresize",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,11 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.7.15",
-    "bluebird": "^3.4.7",
-    "express": "^4.14.0",
-    "lodash": "^4.17.3",
-    "multer": "^1.2.1",
-    "uuid": "^3.0.1"
+    "bluebird": "^3.4.7"
   }
 }

@@ -15,11 +15,11 @@ module.exports = {
   s3BucketPairs: [
     {
       get: 'nmi-poc-2',
-      put: 'nmi-poc-2-resized',
+      put: 'nmi-poc-2',
     },
     {
       get: 'nmi-poc-3',
-      put: 'nmi-poc-3-resized',
+      put: 'nmi-poc-3',
     }
   ]
 };
