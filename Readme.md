@@ -2,24 +2,42 @@ AWS Lambda Image Resize
 ------------------------
 ### Dependency
 1. NodeJS@4.4.7
-2. apex
+2. serverless
 4. npm
 
 ### Preinstall
 1. Set aws credentials to env
-```$ export AWS_ACCESS_KEY_ID=<yourAccessKey>```
-```$ export AWS_SECRET_ACCESS_KEY=<yourSecretKey>```
+`$ export AWS_ACCESS_KEY_ID=<yourAccessKey>`
+`$ export AWS_SECRET_ACCESS_KEY=<yourSecretKey>`
 
-### Required AWS Role Permission
+2. Add custom policy (CloudFormation:CreateStack) to current aws user.
+```{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1449904348000",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:CreateStack"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}```
 
-1. AmazonS3FullAccess (For download and upload images)
-2. AWSLambdaBasicExecutionRole
-3. AWSLambdaS3ExecutionRole
+2. Create IAM Role for lambda execution in AWS console
+
+    Required AWS Role Permission:
+    1. AmazonS3FullAccess (For download and upload images)
+    2. AWSLambdaBasicExecutionRole
+    3. AWSLambdaS3ExecutionRole
 
 ### How To Run
 
 1. Deploy to lambda
-```$ apex deploy imageResize```
+```$ serverless deploy```
 2. Edit config to add buckets to be used for image resize.
 ```$ vim <project>/imageResize/config.js```
 Add bucket pairs.

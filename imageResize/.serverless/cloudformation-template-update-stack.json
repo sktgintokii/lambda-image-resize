@@ -1,0 +1,98 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket"
+    },
+    "ImageResizeLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/imageResize/dev/1483416918742-2017-01-03T04:15:18.742Z/imageResize.zip"
+        },
+        "FunctionName": "imageResize-dev-imageResize",
+        "Handler": "handler.handler",
+        "MemorySize": 1024,
+        "Role": "arn:aws:iam::274863627878:role/service-role/lambda-poc",
+        "Runtime": "nodejs4.3",
+        "Timeout": 6
+      }
+    },
+    "ImageResizeLambdaVersion89BOHoUITAWrV1NVJ73EIOvXJ5ff52ZU72gaNwkz8": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ImageResizeLambdaFunction"
+        },
+        "CodeSha256": "+89BOHoUITAWrV1NVJ73EIOvXJ5ff52ZU7+2gaNwkz8="
+      }
+    },
+    "S3BucketNmipoc3": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "nmi-poc-3",
+        "NotificationConfiguration": {
+          "LambdaConfigurations": [
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "ImageResizeLambdaFunction",
+                  "Arn"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ImageResizeLambdaPermissionNmipoc3S3": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ImageResizeLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "s3.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:s3:::nmi-poc-3"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "ImageResizeLambdaFunctionArn": {
+      "Description": "Lambda function info",
+      "Value": {
+        "Fn::GetAtt": [
+          "ImageResizeLambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "ImageResizeLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ImageResizeLambdaVersion89BOHoUITAWrV1NVJ73EIOvXJ5ff52ZU72gaNwkz8"
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@
     },
     upload: function($form, onComplete) {
       var data = new FormData($form[0]);
+
       console.log($form, data);
       $.ajax({
         url: '/api/uploadImage',

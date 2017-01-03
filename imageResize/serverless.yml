@@ -1,0 +1,15 @@
+service: imageResize
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  region: us-west-2
+  role: arn:aws:iam::274863627878:role/service-role/lambda-poc
+
+functions:
+  imageResize:
+    handler: handler.handler
+    events:
+      - s3:
+          bucket: nmi-poc-3
+          event: s3:ObjectCreated:*
